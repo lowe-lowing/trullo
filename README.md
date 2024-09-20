@@ -50,8 +50,8 @@ Why I Chose PostgreSQL
 
 ### Middlewares
 
-    authMiddleware: Checks if the user is logged in.
-    adminMiddleware: Checks if the user is an admin before allowing access to certain routes.
+- authMiddleware: Checks if the user is logged in.
+- adminMiddleware: Checks if the user is an admin before allowing access to certain routes.
 
 ### To install dependencies:
 
