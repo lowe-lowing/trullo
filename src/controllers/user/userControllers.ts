@@ -22,13 +22,16 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
     const { name, email, role } = req.body as UserBody;
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id },
       data: { name, email, role },
     });
-    res.send(user);
+    res.send(updatedUser);
   } catch (error) {
     res.status(500).json({ error: "Something went wrong" });
   }

@@ -1,6 +1,6 @@
 import { Role, type User } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { prisma } from ".";
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +8,9 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   if (cookies && cookies.Authorization) {
     const secret = "qwe";
     try {
-      const verificationResponse = jwt.verify(cookies.Authorization, secret) as User;
+      const verificationResponse = jwt.verify(cookies.Authorization, secret, {
+        maxAge: "24h",
+      }) as User;
       const id = verificationResponse.id;
       const user = await prisma.user.findUnique({ where: { id } });
       if (user) {

@@ -2,6 +2,10 @@
   "name": "trullo",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "npx tsx watch ./src/index.ts",
+    "start": "npx tsx ./src/index.ts"
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
@@ -19,6 +23,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.21.0",
     "express-validator": "^7.2.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "tsx": "^4.19.1"
   }
 }

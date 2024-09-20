@@ -4,9 +4,9 @@ import { validateTask } from "../controllers/task/validators";
 
 const router = express.Router();
 
-router.get("/", getTasks);
+router.get("/:projectId", getTasks);
 router.post("/:projectId", validateTask, createTask);
-router.patch("/:id", validateTask, updateTask);
+router.put("/:id", validateTask, updateTask);
 router.delete("/:id", deleteTask);
 
 export default router;

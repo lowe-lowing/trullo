@@ -9,3 +9,4 @@ router.patch("/", validateUpdateProfile, updateProfile);
 router.patch("/password", validateUpdatePassword, updatePassword);
 
 export default router;
+// test user routes

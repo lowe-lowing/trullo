@@ -6,12 +6,14 @@ import {
   deleteProject,
   getProjectsByUser,
   addMember,
+  getProjectWithTasks,
 } from "../controllers/project/projectControllers";
 import { validateProject } from "../controllers/project/validators";
 
 const router = express.Router();
 
 router.get("/", getProjects);
+router.get("/:id", getProjectWithTasks);
 router.get("/user", getProjectsByUser);
 router.post("/", validateProject, createProject);
 router.patch("/:id", validateProject, updateProject);

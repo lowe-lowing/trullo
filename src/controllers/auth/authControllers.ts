@@ -1,8 +1,8 @@
-import type { Request, Response } from "express";
-import { prisma } from "../..";
-import * as jwt from "jsonwebtoken";
 import { compare, genSalt, hash } from "bcrypt";
-import { body, validationResult } from "express-validator";
+import type { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+import { prisma } from "../..";
 const secret = "qwe";
 
 interface RegisterBody {

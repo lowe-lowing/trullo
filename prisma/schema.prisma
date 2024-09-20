@@ -33,6 +33,7 @@ model Task {
   assignedToId Int?
   createdAt    DateTime  @default(now())
   finishedBy   DateTime?
+  tags         String[]
 
   project Project @relation(fields: [projectId], references: [id])
 

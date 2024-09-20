@@ -8,7 +8,6 @@ export const validateTask = [
     .isLength({ min: 3 })
     .withMessage("title must be at least 3 characters long"),
   body("description")
-    .optional()
     .isString()
     .withMessage("description must be a string")
     .isLength({ min: 3 })
@@ -20,5 +19,6 @@ export const validateTask = [
     .withMessage("status must be a string")
     .isIn(["to_do", "in_progress", "done"] as Status[])
     .withMessage("status must be one of 'to_do', 'in_progress', 'done'"),
-  body("finishedBy").optional().isDate().withMessage("finishedBy must be a date"),
+  body("finishedBy").optional().isISO8601().withMessage("finishedBy must be a date"),
+  body("tags").optional().isArray().withMessage("tags must be an array"),
 ];

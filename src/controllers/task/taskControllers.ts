@@ -13,7 +13,7 @@ export const getTasks = async (req: Request, res: Response) => {
   }
 };
 
-type TaskBody = Pick<Task, "title" | "description" | "assignedToId" | "projectId" | "finishedBy" | "status">;
+type TaskBody = Omit<Task, "id" | "createdAt" | "projectId">;
 
 export const createTask = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -21,16 +21,17 @@ export const createTask = async (req: Request, res: Response) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const projectId = parseInt(req.params.projectId);
-  const { title } = req.body as TaskBody;
+  const { title, description, assignedToId, finishedBy, status, tags } = req.body as TaskBody;
 
   const newTask = await prisma.task.create({
     data: {
       title,
       projectId,
-      description: "",
-      assignedToId: null,
-      status: "to_do",
-      finishedBy: null,
+      description,
+      assignedToId,
+      status,
+      finishedBy: finishedBy ? new Date(finishedBy) : null,
+      tags,
     },
   });
   res.status(201).send(newTask);
@@ -44,14 +45,26 @@ export const updateTask = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const task = await prisma.task.findUnique({ where: { id } });
-    const { title, description, assignedToId, finishedBy, status } = req.body as TaskBody;
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+    const { title, description, assignedToId, finishedBy, status, tags } = req.body as TaskBody;
 
-    await prisma.task.update({
+    const updatedTask = await prisma.task.update({
       where: { id },
-      data: { title, description, assignedToId, finishedBy, status },
+      data: {
+        title,
+        description,
+        assignedToId,
+        finishedBy: finishedBy ? new Date(finishedBy) : null,
+        status,
+        tags,
+      },
     });
-    res.send(task);
+    res.send(updatedTask);
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: "Something went wrong" });
   }
 };
