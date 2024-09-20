@@ -11,6 +11,23 @@ export const getProjects = async (req: Request, res: Response) => {
   }
 };
 
+export const getProjectsByUser = async (req: Request, res: Response) => {
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        members: {
+          some: {
+            userId: req.user!.id,
+          },
+        },
+      },
+    });
+    res.send(projects);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 interface ProjectBody {
   title: string;
 }
@@ -26,7 +43,11 @@ export const createProject = async (req: Request, res: Response) => {
     const newProject = await prisma.project.create({
       data: {
         title,
-        userId: req.user!.id,
+        members: {
+          create: {
+            userId: req.user!.id,
+          },
+        },
       },
     });
     res.status(201).send(newProject);
@@ -50,6 +71,25 @@ export const updateProject = async (req: Request, res: Response) => {
       data: { title },
     });
     res.send(project);
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+export const addMember = async (req: Request, res: Response) => {
+  try {
+    const { projectId, userId } = req.params;
+    await prisma.project.update({
+      where: { id: parseInt(projectId) },
+      data: {
+        members: {
+          create: {
+            userId: parseInt(userId),
+          },
+        },
+      },
+    });
+    res.send("Member added");
   } catch (error) {
     res.status(500).json({ error: "Something went wrong" });
   }
