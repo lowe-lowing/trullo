@@ -67,7 +67,7 @@ npm install
 ### To run:
 
 ```bash
-bun run .src/index.ts
+bun src/index.ts
 ```
 
 or
