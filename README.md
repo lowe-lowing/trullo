@@ -2,10 +2,9 @@
 
 ## Introduction
 
-This is a simple task management app I built using Node.js, Express, and Prisma with a PostgreSQL database. It allows users to create projects, add tasks, and manage them. There are different user roles like Admin and Default User, and only admins can manage users.
-Why I Chose PostgreSQL
+This is a simple task management app I built using Node.js, Express, and Prisma with a PostgreSQL database. It allows users to create projects, add tasks, and manage them. There are two different user roles Admin and Default, only admins can manage users.
 
-## I chose PostgreSQL as the database because:
+## Why I Chose PostgreSQL
 
 - Easy to Use: I find it straightforward to set up and use, especially with Prisma.
 - Supports Relationships: The app needs to handle relationships between users, projects, and tasks, and PostgreSQL is good for that.
